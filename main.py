@@ -15,27 +15,27 @@ def is_invalid(text):
 def signup():
     username = request.form['username']
     password = request.form['password']
-    c_password = request.form['c_password']
+    verifypassword = request.form['verifypassword']
     email = request.form['email']
 
     username_error = ''
     password_error = ''
-    c_password_error = ''
+    verfiy_error = ''
     email_error = ''
 
     if is_invalid(username):
         username_error = "That's not a valid username"
     if is_invalid(password):
         password_error = "That's not a valid password"
-    if c_password == '':
-        c_password_error = "That's not a valid password"
-    if c_password != password:
-        c_password_error = "Passwords don't match"
+    if verifypassword == '':
+        verfiy_error = "That's not a valid password"
+    if verifypassword != password:
+        verfiy_error = "Passwords don't match"
     if email != '' and (email.count("@") != 1 or email.count(".") != 1 or is_invalid(email)):
         email_error = "That's not a valid email"
 
 
-    if not (username_error or password_error or c_password_error or email_error):
+    if not (username_error or password_error or verfiy_error or email_error):
         return redirect('/welcome?username=' + username)
     else:
         return render_template('forms.html',
@@ -43,7 +43,7 @@ def signup():
             email = email,
             username_error = username_error,
             password_error = password_error,
-            c_password_error = c_password_error,
+            verfiy_error = verfiy_error,
             email_error = email_error)
 
 
@@ -58,4 +58,4 @@ def index():
     return render_template('forms.html')
 
 
-app.run()
+app.run(host= '0.0.0.0', port=5000)
